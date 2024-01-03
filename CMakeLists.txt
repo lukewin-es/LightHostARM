@@ -26,13 +26,13 @@ set(CMAKE_XCODE_GENERATE_SCHEME OFF)
 # This is set on CI but not during local dev
 if ((DEFINED ENV{CI}) AND (CMAKE_BUILD_TYPE STREQUAL "Release"))
   message("Building for Apple Silicon and x86_64")
-  set(CMAKE_OSX_ARCHITECTURES x86_64)
+  set(CMAKE_OSX_ARCHITECTURES arm64)
 endif ()
 
 # Allow to use deprecated MessageManager::runDispatchLoopUntil
 add_compile_definitions(JUCE_MODAL_LOOPS_PERMITTED)
 
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Support macOS down to High Sierra")
+set(CMAKE_OSX_DEPLOYMENT_TARGET "14" CACHE STRING "Support macOS down to High Sierra")
 
 # Adds all the module sources so they appear correctly in the IDE
 # Must be set before JUCE is added as a sub-dir (or any targets are made)
