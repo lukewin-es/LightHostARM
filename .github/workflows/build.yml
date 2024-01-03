@@ -54,16 +54,9 @@ jobs:
           unzip pluginval_macOS.zip
           pluginval.app/Contents/MacOS/pluginval --strictness-level 10 --verbose --validate "${{ env.VST3_PATH }}"
 
-      - name: Package .app
-        run: |
-          mkdir -p packaging/app
-          cp -R "${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}.app" packaging/app/
-          cp -R "${{ env.ARTIFACTS_PATH }}/VST3/${{ env.PROJECT_NAME }}.vst3" packaging/app/
-          cp -R "${{ env.ARTIFACTS_PATH }}/AU/${{ env.PROJECT_NAME }}.component" packaging/app/
-
-      - name: Upload .app (MacOS)
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.PROJECT_NAME }}.app
-          path: packaging/app/${{ env.PROJECT_NAME }}.app
+          name: ${{ env.PROJECT_NAME }}
+          path: "${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}_artefacts/${{ env.BUILD_TYPE }}"
 
