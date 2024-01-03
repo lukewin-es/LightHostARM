@@ -36,7 +36,7 @@ jobs:
 
       - name: Configure
         shell: bash
-        run: cmake -B ${{ env.BUILD_DIR }} -G Ninja -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE}} -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" .
+        run: cmake -B ${{ env.BUILD_DIR }} -G Ninja -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE}} -DCMAKE_OSX_ARCHITECTURES="arm64" .
 
       - name: Build
         shell: bash
@@ -57,13 +57,13 @@ jobs:
       - name: Package .app
         run: |
           mkdir -p packaging/app
-          mv "${{ env.ARTIFACTS_PATH }}/VST3/${{ env.PROJECT_NAME }}.vst3" packaging/app
-          mv "${{ env.ARTIFACTS_PATH }}/AU/${{ env.PROJECT_NAME }}.component" packaging/app
-          mv "${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}.app" packaging/app
-          codesign -s "${{ secrets.DEVELOPER_ID_APPLICATION}}" --timestamp -i com.pamplejuce.pamplejuce --deep --force packaging/app/${{ env.PROJECT_NAME }}.app
+          cp -R "${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}.app" packaging/app/
+          cp -R "${{ env.ARTIFACTS_PATH }}/VST3/${{ env.PROJECT_NAME }}.vst3" packaging/app/
+          cp -R "${{ env.ARTIFACTS_PATH }}/AU/${{ env.PROJECT_NAME }}.component" packaging/app/
 
       - name: Upload .app (MacOS)
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.PROJECT_NAME }}.app
           path: packaging/app/${{ env.PROJECT_NAME }}.app
+
