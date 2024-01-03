@@ -38,6 +38,11 @@ jobs:
         with:
           submodules: true
 
+      - name: Install Ninja
+        run: |
+          brew update
+          brew install ninja
+
       - name: Set up Environment Variables
         run: |
           VERSION_REGEX='^refs/tags/v([0-9]+\.[0-9]+\.[0-9]+)$'
