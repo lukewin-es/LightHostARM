@@ -95,15 +95,16 @@ jobs:
       with:
         submodules: true # Get JUCE populated
 
-    - name: Setup Environment Variables
+    - name: Set up Environment Variables
       shell: bash
       run: |
-        VERSION=$(cat VERSION)
-        echo "ARTIFACTS_PATH=${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}_artefacts/${{ env.BUILD_TYPE }}" >> $GITHUB_ENV
-        echo "VST3_PATH=${{ env.PROJECT_NAME }}_artefacts/${{ env.BUILD_TYPE }}/VST3/${{ env.PROJECT_NAME }}.vst3" >> $GITHUB_ENV
-        echo "AU_PATH=${{ env.PROJECT_NAME }}_artefacts/${{ env.BUILD_TYPE }}/AU/${{ env.PROJECT_NAME }}.component" >> $GITHUB_ENV
-        echo "AUV3_PATH=${{ env.PROJECT_NAME }}_artefacts/${{ env.BUILD_TYPE }}/AUv3/${{ env.PROJECT_NAME }}.appex" >> $GITHUB_ENV
-        echo "PRODUCT_NAME=${{ env.PROJECT_NAME }}-$VERSION-${{ matrix.name }}" >> $GITHUB_ENV
+          VERSION_REGEX='^refs/tags/v([0-9]+\.[0-9]+\.[0-9]+)$'
+          if [[ $GITHUB_REF =~ $VERSION_REGEX ]]; then
+              PROJECT_VERSION="${BASH_REMATCH[1]}"
+          else
+              PROJECT_VERSION="0.0.0.${GITHUB_RUN_NUMBER}"
+          fi
+          echo "PROJECT_VERSION=${PROJECT_VERSION}" >> $GITHUB_ENV
 
     - name: ccache
       uses: hendrikmuhs/ccache-action@main
