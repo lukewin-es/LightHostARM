@@ -17,7 +17,7 @@ if(NOT PROJECT_VERSION)
 endif()
 
 # For simplicity, the name of the project is also the name of the target
-project(${PROJECT_NAME} VERSION ${CURRENT_VERSION})
+project(${PROJECT_NAME} VERSION ${PROJECT_VERSION})
 
 # By default we don't want Xcode schemes to be made for modules, etc
 set(CMAKE_XCODE_GENERATE_SCHEME OFF)
