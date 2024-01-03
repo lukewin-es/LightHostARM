@@ -92,7 +92,7 @@ juce_add_binary_data(Resources
 
 # Required for Linux happiness:
 # See https://forum.juce.com/t/loading-pytorch-model-using-binarydata/39997/2
-set_target_properties(Assets PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+set_target_properties(Resources PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
 
 # Clean up folder organization on Xcode.
 # It tucks the Plugin varieties into a "Targets" folder and generate an Xcode Scheme manually
